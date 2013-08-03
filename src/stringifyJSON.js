@@ -22,9 +22,13 @@ var stringifyJSON = function (obj) {
   }
   if (Object.prototype.toString.call(obj) === "[object Object]") {
   	var values = '';
-  	for (name in obj) {
-  	  if ( values != '') values += ',';
-	  values += stringifyJSON(name) + ':' + stringifyJSON(obj[name]);
+  	var blankFunction = new RegExp("function.*\{ *}");
+  	for (var name in obj) {
+  	  if (values != '') values += ',';
+  	  value = stringifyJSON(obj[name]);
+  	  console.log(name + value);
+  	  if (!blankFunction.test(value) && value !== undefined)
+  	  	values += stringifyJSON(name) + ':' + value;
   	}
 	return "{".concat(values,"}");
   }
