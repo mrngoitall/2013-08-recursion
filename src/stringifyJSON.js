@@ -4,4 +4,11 @@
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
   // your code goes here
+  if (typeof obj === "string") {
+	  var quotes = '\"';
+	  return quotes.concat(obj,quotes);
+  }
+  if (obj!=undefined) return obj.toString();
+  if (obj===null) return 'null';
+  return obj;
 };
