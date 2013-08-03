@@ -15,10 +15,18 @@ var stringifyJSON = function (obj) {
   if (Object.prototype.toString.call(obj) === "[object Array]") {
   	var values = '';
   	for (var i=0; i<obj.length; i++) {
-  		if (i != 0) values += ',';
-	  	(typeof obj[i] === "number") ? values += obj[i] : values += stringifyJSON(obj[i]);
+  	  if (i != 0) values += ',';
+	  typeof obj[i] === "number" ? values += obj[i] : values += stringifyJSON(obj[i]);
   	}
 	return "[".concat(values,"]");
+  }
+  if (Object.prototype.toString.call(obj) === "[object Object]") {
+  	var values = '';
+  	for (name in obj) {
+  	  if ( values != '') values += ',';
+	  values += stringifyJSON(name) + ':' + stringifyJSON(obj[name]);
+  	}
+	return "{".concat(values,"}");
   }
   if (obj!=undefined) return obj.toString();
   if (obj===null) return 'null';
