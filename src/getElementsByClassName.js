@@ -7,15 +7,20 @@
 var getElementsByClassName = function (className) {
   // your code here
   var elements = [];
-  if (document.body.childNodes.length > 0) 
-  	for (var i = 0; i < document.body.childNodes.length; i++) {
-      if (document.body.childNodes[i].classList !== undefined)
-        for (var j = 0; j < document.body.childNodes[i].classList.length; j++) {
-          if (document.body.childNodes[i].classList[j]===className) {
-            //console.log(document.body.childNodes[i]);
-            elements.push(document.body.childNodes[i]);
+  var searchChildNodes = function (node, className) {
+	  for (var i = 0; i < node.childNodes.length; i++) {
+      if (node.childNodes[i].classList !== undefined) {
+        for (var j = 0; j < node.childNodes[i].classList.length; j++) {
+          if (node.childNodes[i].classList[j]===className) {
+            elements.push(node.childNodes[i]);
           }
         }
+      }
+      if (node.childNodes[i].childNodes.length > 0)
+        searchChildNodes(node.childNodes[i], className);
     }
-    return elements;
+  }
+  if (document.body.childNodes.length > 0) 
+  	searchChildNodes(document.body, className);
+  return elements;
 };
